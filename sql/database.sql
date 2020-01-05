@@ -7,7 +7,7 @@ CREATE TABLE post(
   title VARCHAR(200) NOT NULL,
   description TEXT NOT NULL,
   image_url TEXT,
-  create_at TIMESTAMP DEFAULT CURRENT_TIME
+  create_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 DESCRIBE post;
