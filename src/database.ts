@@ -5,7 +5,8 @@ export async function connect() {
     host: 'localhost',
     user: 'root',
     password: 'root',
-    database: 'node_mysql_ts'
+    //database: 'node_mysql_ts'
+    database: 'wordpress'
   })
 
   return connection

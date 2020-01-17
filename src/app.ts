@@ -5,6 +5,7 @@ import morgan from 'morgan'
 // Routes
 import IndexRoutes from './routes/index.routes'
 import PostRoutes from './routes/post.routes'
+import WpPostRoutes from './routes/wp_posts.routes'
 
 export class App {
   private app: Application
@@ -28,6 +29,7 @@ export class App {
   routes() {
     this.app.use(IndexRoutes)
     this.app.use('/posts', this.connection, PostRoutes)
+    this.app.use('/wp_posts', this.connection, WpPostRoutes)
   }
 
   async connection(req: Request, res: Response, next: NextFunction) {
