@@ -5,7 +5,9 @@ import {
   getPost,
   deletePost,
   updatePost,
-  getPostContent
+  getPostContent,
+  getPostsContent,
+  getPostContentClean
 } from '../controllers/wp_posts.controller'
 
 const router = Router()
@@ -15,7 +17,9 @@ router
   .get(getPosts)
   .post(createPost)
 
-router.route('/content').get(getPostContent)
+router.route('/content').get(getPostsContent)
+router.route('/content/:postId').get(getPostContent)
+router.route('/contentclean/:postId/').get(getPostContentClean)
 
 router
   .route('/:postId')

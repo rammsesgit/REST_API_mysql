@@ -36,11 +36,52 @@ async function updatePost(req: Request, res: Response) {
 /**
  * Get only the post content
  */
-async function getPostContent(req: Request, res: Response): Promise<Response> {
+async function getPostsContent(req: Request, res: Response): Promise<Response> {
   const posts = await req.body.conn.query(
-    `SELECT post_content FROM ${tableName} WHERE post_type = 'post'`
+    `SELECT id, post_content FROM ${tableName} WHERE post_type = 'post'`
   )
   return res.json(posts[0])
 }
 
-export { getPosts, createPost, getPost, deletePost, updatePost, getPostContent }
+/**
+ * Get only the post content from a single post
+ */
+async function getPostContent(req: Request, res: Response): Promise<Response> {
+  const posts = await req.body.conn.query(
+    `SELECT post_content FROM ${tableName} WHERE post_type = 'post' AND id = ${req.params.postId}`
+  )
+  return res.json(posts[0][0])
+}
+
+/**
+ * Get only the post content from a single post but without siteorigin_widget's
+ */
+async function getPostContentClean(req: Request, res: Response): Promise<Response> {
+  let content = '',
+    cleanContent = ''
+
+  const posts = await req.body.conn.query(
+    `SELECT post_content FROM ${tableName} WHERE post_type = 'post' AND id = ${req.params.postId}`
+  )
+
+  content = posts[0][0].post_content
+
+  if (content.includes('[siteorigin_widget')) {
+    cleanContent = content.replace(/\[siteorigin_widget.+\/siteorigin_widget]/gi, '')
+  } else {
+    cleanContent = content
+  }
+
+  return res.json({ cleanContent })
+}
+
+export {
+  getPosts,
+  createPost,
+  getPost,
+  deletePost,
+  updatePost,
+  getPostsContent,
+  getPostContent,
+  getPostContentClean
+}
