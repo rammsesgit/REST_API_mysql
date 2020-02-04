@@ -7,7 +7,9 @@ import {
   updatePost,
   getPostContent,
   getPostsContent,
-  getPostContentClean
+  getPostContentClean,
+  getPostsContentClean,
+  updatePostsContentClean
 } from '../controllers/wp_posts.controller'
 
 const router = Router()
@@ -18,6 +20,8 @@ router
   .post(createPost)
 
 router.route('/content').get(getPostsContent)
+router.route('/content/clean').get(updatePostsContentClean)
+router.route('/contentclean/').get(getPostsContentClean)
 router.route('/content/:postId').get(getPostContent)
 router.route('/contentclean/:postId/').get(getPostContentClean)
 
